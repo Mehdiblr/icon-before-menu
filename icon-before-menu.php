@@ -41,12 +41,9 @@ function add_custom_menu_item($item_id, $item)
             <?php
             if ($value = $getValue($item_id, $menu_item_name)) {
                 echo $value;
-            } ?>
-            <option value="dash1">s</option>
-            <option value="dash2">d</option>
-            <option value="dash3"></option>
-            <option value="dash4">s</option>
-            <option value="dashicons-id">dashicons-id</option>
+            }
+
+            require 'options.php' ?>
         </select>
 
     </div>
@@ -73,7 +70,7 @@ function my_nav_menu_item_title($title, $item, $args, $depth)
         // global $menu_item_name;
         $menuValu = get_post_meta($item->ID, "menu_item_" . $item->ID);
 
-        $title = '<span class="dashicons ' . $menuValu[0] . ' ">' . '</span>' . '<span>' . $title . '</span>';
+        $title = '<span class="dashicons dashicons-' . $menuValu[0] . ' ">' . '</span>' . '<span>' . $title . '</span>';
     }
 
     return $title;
@@ -92,7 +89,6 @@ function style_admin_icon()
 {
     //Custom Css
     wp_enqueue_style('icon_style', plugin_dir_url(__FILE__) . 'css/style.css',);
-    
 }
 
 //Add custom style in website's page
