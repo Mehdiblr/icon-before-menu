@@ -9,3 +9,7 @@
 span.iconCustom {
     color: red
 }
+
+ul li span.dashicons {
+    margin: 0 0 0 3px;
+}

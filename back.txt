@@ -1,0 +1,8 @@
+        <label for="<?php echo $menu_item_ID ?>">آیکون مورد نظر را انتخاب کنید: </label>
+        <input type="text" class="custom-menu-item" name="<?php echo $menu_item_name ?>" id="<?php echo $menu_item_ID ?>"
+        value="<?php if (get_post_meta($item_id, $menu_item_name)) {
+        $menuValu = get_post_meta($item_id, $menu_item_name);
+        echo $menuValu[0];
+            } else {
+                                                                                                                                        echo "آیکونی را انتخاب کنید";
+                                                                                                                                    } ?>" />
