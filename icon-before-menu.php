@@ -57,7 +57,7 @@ function my_nav_menu_item_title($title, $item, $args, $depth)
         // $menuItemIconPath = get_option();
         $menuValu = get_post_meta($item->ID,"menu_item_" . $item->ID);
         
-        $title = $menuValu[0] . '<span>' . $title . '</span>';
+        $title = $menuValu[0] . '<span class="::be">' . $title . '</span>';
     }
 
     return $title;
