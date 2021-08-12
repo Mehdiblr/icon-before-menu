@@ -1,16 +1,4 @@
-.ftahoma {
-    font-family: tahoma, arial !important;
-}
-
-.custom-menu-item {
-    width: 100%;
-}
-
-span.iconCustom {
-    color: red
-}
-
-ul li span.dashicons {
+.CustomMenuIcon {
     margin: 0 0 0 3px;
     vertical-align: middle;
 }
