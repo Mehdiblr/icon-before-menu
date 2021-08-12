@@ -22,8 +22,8 @@ if (!class_exists('menuIcon')) {
             add_action('wp_nav_menu_item_custom_fields', array($this, 'add_custom_menu_item'), 10, 1);
             add_action('wp_update_nav_menu_item', array($this, 'save_menu_item_desc'), 10, 2);
             add_filter('nav_menu_item_title', array($this, 'my_nav_menu_item_title'), 10, 2);
-            add_action('wp_enqueue_scripts', array($this, 'load_dashicons'), 999);
-            add_action('wp_enqueue_scripts', array($this, 'style_main_icon'));
+            add_action('wp_enqueue_scripts', array($this, 'load_dashicons'));
+            add_action('admin_enqueue_scripts', array($this, 'style_main_icon'));
         }
 
         // Add inputs in appreance>nav-menu
@@ -31,14 +31,18 @@ if (!class_exists('menuIcon')) {
         {
             $menu_item_name = 'select_menu_icon_' . $item_id;
             $menu_item_ID = 'menu-item-' . $item_id;
+            $valuPostMeta = get_post_meta($item_id, "select_menu_icon_" . $item_id, true);
 ?>
+
+
             <div class="sectionCustomField">
                 <label for="<?php echo $menu_item_ID ?>">انتخاب آیکون</label>
-                <select id="<?php echo $menu_item_ID ?>" name="<?php echo $menu_item_name ?>">
-                    <option value="">آیکونی را انتخاب کنید</option>
+                <input type="input" id="<?php echo $menu_item_ID ?>" value="<?php if ($valuPostMeta) {
+                                                                                echo $valuPostMeta;
+                                                                            } ?>" name="<?php echo $menu_item_name ?>">
+                <ul class="menuIconUlist">
                     <?php
                     $array = [
-
                         "menu",
                         "admin-site",
                         "dashboard",
@@ -204,14 +208,13 @@ if (!class_exists('menuIcon')) {
                         "lightbulb",
                         "smiley"
                     ];
-                    $menuValu = get_post_meta($item_id, $menu_item_name, true);
+
                     foreach ($array as $key) {
-                        echo "<option value=" . $key . " " . selected($key, $menuValu, false) . " >" . $key . "</option>";
-                    };
 
+                        echo "<li class=\"iconPicker\" menuID=\"" . $item_id . "\" name=" . $key . "> <span class=\"dashicons dashicons-" . $key . "\"></span> </li>";
+                    }
                     ?>
-                </select>
-
+                </ul>
             </div>
 
 <?php
@@ -240,19 +243,26 @@ if (!class_exists('menuIcon')) {
             }
         }
 
+        //load dash icons and custom style in index
         public function load_dashicons()
         {
             wp_enqueue_style('dashicons');
+            wp_enqueue_style('icon_main_style', plugin_dir_url(__FILE__) . 'css/style.css');
+            wp_enqueue_script('mainCustomJs', plugin_dir_url(__FILE__) . 'js/custom.js', array('jQuery'));
         }
 
         public function style_main_icon()
         {
-            wp_enqueue_style('icon_main_style', plugin_dir_url(__FILE__) . 'css/style.css',);
+            wp_enqueue_style('icon_main_style', plugin_dir_url(__FILE__) . 'css/style.css');
+            wp_enqueue_script('mainCustomJs', plugin_dir_url(__FILE__) . 'js/custom.js');
         }
     }
 }
 
+
 new menuIcon();
+
+
 
 // Refrences
 // https://developer.wordpress.org/reference/functions/add_action/

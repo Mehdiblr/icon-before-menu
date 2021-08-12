@@ -2,3 +2,20 @@
     margin: 0 0 0 3px;
     vertical-align: middle;
 }
+
+ul.menuIconUlist {
+    color: gray;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: calc(100% - 5px);
+    height: auto;
+    flex-direction: row;
+    align-content: center;
+    align-items: baseline;
+}
+
+ul.menuIconUlist li {
+    list-style-type: none;
+    padding: 2px 3px;
+}
