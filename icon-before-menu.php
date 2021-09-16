@@ -8,12 +8,12 @@
  * Author URI:        https://mehdiblr.ir/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       IBM
+ * Text Domain:       IBM آیکون اصلاح شود نامش
  * Domain Path:       /languages
  */
 
-if (!class_exists('menuIcon')) {
-    class menuIcon
+if (!class_exists('IconBeforeMenu')) {
+    class IconBeforeMenu
     {
 
 
@@ -29,7 +29,7 @@ if (!class_exists('menuIcon')) {
         // Add inputs in appreance>nav-menu
         public function add_custom_menu_item($item_id)
         {
-            $menu_item_name = 'select_menu_icon_' . $item_id;
+            $menu_item_name = 'select_menu_icon_' . $item_id; // باید اصلاح شود
             $menu_item_ID = 'menu-item-' . $item_id;
             $valuPostMeta = get_post_meta($item_id, "select_menu_icon_" . $item_id, true);
 ?>
@@ -42,7 +42,7 @@ if (!class_exists('menuIcon')) {
                                                                             } ?>" name="<?php echo $menu_item_name ?>">
                 <ul class="menuIconUlist">
                     <?php
-                    $array = [
+                    $array = [ // اصلاح شود با یک منو آکاردئون + آیکون حذف
                         "menu",
                         "admin-site",
                         "dashboard",
@@ -230,14 +230,19 @@ if (!class_exists('menuIcon')) {
         }
 
         // Edit and show icon on page before menu items
-        public function my_nav_menu_item_title($title, $item)
+        public function my_nav_menu_item_title($title, $item) 
+        /*
+            تغییر نام تابع
+            تغییر نام کلاس طوری که شبیه به نام افزونه باشد
+
+        */
         {
 
-            // all level
-            // global $menu_item_name;
+           // all level
+            // global $menu_item_name; 
             $menuValu = get_post_meta($item->ID, "select_menu_icon_" . $item->ID, true);
             if ($menuValu) {
-                return '<span class="CustomMenuIcon dashicons dashicons-' . $menuValu . ' ">' . '</span>' . '<span>' . $title . '</span>';
+                return '<span class="CustomMenuIcon dashicons dashicons-' . $menuValu . ' "></span> <span>' . $title . '</span>';
             } else {
                 return $title;
             }
@@ -245,10 +250,13 @@ if (!class_exists('menuIcon')) {
 
         //load dash icons and custom style in index
         public function load_dashicons()
+        /*
+            اصلاح نام هندلر ها
+            جدا کردن فایل استایل شیت
+        */
         {
             wp_enqueue_style('dashicons');
             wp_enqueue_style('icon_main_style', plugin_dir_url(__FILE__) . 'css/style.css');
-            wp_enqueue_script('mainCustomJs', plugin_dir_url(__FILE__) . 'js/custom.js', array('jQuery'));
         }
 
         public function style_main_icon()
@@ -260,7 +268,7 @@ if (!class_exists('menuIcon')) {
 }
 
 
-new menuIcon();
+new IconBeforeMenu();
 
 
 
