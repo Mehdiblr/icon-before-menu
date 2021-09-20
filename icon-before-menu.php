@@ -1,16 +1,18 @@
 <?php
 /*
  * Plugin Name:       Icon Before Menu
- * Plugin URI:        https://ongitbutnot.hit/
+ * Plugin URI:        https://github.com/Mehdiblr/icon-before-menu/
  * Description:       افزونه اضافه کردن آیکون به منو های بخش فهرست بالا.
  * Version:           1.0.0
  * Author:            Mehdi Bolourian
  * Author URI:        https://mehdiblr.ir/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       IBM آیکون اصلاح شود نامش
+ * Text Domain:       IconBeforeMenu
  * Domain Path:       /languages
  */
+
+ //IBM Means Icon Before Menu
 
 if (!class_exists('IconBeforeMenu')) {
     class IconBeforeMenu
@@ -19,19 +21,19 @@ if (!class_exists('IconBeforeMenu')) {
 
         public function __construct()
         {
-            add_action('wp_nav_menu_item_custom_fields', array($this, 'add_custom_menu_item'), 10, 1);
-            add_action('wp_update_nav_menu_item', array($this, 'save_menu_item_desc'), 10, 2);
-            add_filter('nav_menu_item_title', array($this, 'my_nav_menu_item_title'), 10, 2);
-            add_action('wp_enqueue_scripts', array($this, 'load_dashicons'));
+            add_action('wp_nav_menu_item_custom_fields', array($this, 'add_icon_before_menu_input'), 10, 1);
+            add_action('wp_update_nav_menu_item', array($this, 'save_icon_before_menu_value'), 10, 2);
+            add_filter('nav_menu_item_title', array($this, 'add_icon_before_menu_title'), 10, 2);
+            add_action('wp_enqueue_scripts', array($this, 'load_dashicon_in_client'));
             add_action('admin_enqueue_scripts', array($this, 'style_main_icon'));
         }
 
         // Add inputs in appreance>nav-menu
-        public function add_custom_menu_item($item_id)
+        public function add_icon_before_menu_input($item_id)
         {
-            $menu_item_name = 'select_menu_icon_' . $item_id; // باید اصلاح شود
-            $menu_item_ID = 'menu-item-' . $item_id;
-            $valuPostMeta = get_post_meta($item_id, "select_menu_icon_" . $item_id, true);
+            $menu_item_name = 'select_IBM_' . $item_id; // باید اصلاح شود
+            $menu_item_ID = 'select_IBM_' . $item_id;
+            $valuPostMeta = get_post_meta($item_id, "select_IBM_" . $item_id, true);
 ?>
 
 
@@ -221,16 +223,16 @@ if (!class_exists('IconBeforeMenu')) {
         }
 
         // Save values with "wp_update_nav_menu_item" hook
-        public function save_menu_item_desc($menu_id, $menu_item_db_id)
+        public function save_icon_before_menu_value($menu_id, $menu_item_db_id)
         {
-            $menuItem = $_POST["select_menu_icon_{$menu_item_db_id}"];
+            $menuItem = $_POST["select_IBM_{$menu_item_db_id}"];
             if (isset($menuItem)) {
-                update_post_meta($menu_item_db_id, 'select_menu_icon_' . $menu_item_db_id, $menuItem);
+                update_post_meta($menu_item_db_id, 'select_IBM_' . $menu_item_db_id, $menuItem);
             }
         }
 
         // Edit and show icon on page before menu items
-        public function my_nav_menu_item_title($title, $item) 
+        public function add_icon_before_menu_title($title, $item) 
         /*
             تغییر نام تابع
             تغییر نام کلاس طوری که شبیه به نام افزونه باشد
@@ -240,7 +242,7 @@ if (!class_exists('IconBeforeMenu')) {
 
            // all level
             // global $menu_item_name; 
-            $menuValu = get_post_meta($item->ID, "select_menu_icon_" . $item->ID, true);
+            $menuValu = get_post_meta($item->ID, "select_IBM_" . $item->ID, true);
             if ($menuValu) {
                 return '<span class="CustomMenuIcon dashicons dashicons-' . $menuValu . ' "></span> <span>' . $title . '</span>';
             } else {
@@ -249,7 +251,7 @@ if (!class_exists('IconBeforeMenu')) {
         }
 
         //load dash icons and custom style in index
-        public function load_dashicons()
+        public function load_dashicon_in_client()
         /*
             اصلاح نام هندلر ها
             جدا کردن فایل استایل شیت
