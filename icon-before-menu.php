@@ -46,7 +46,7 @@ if (!class_exists('IconBeforeMenu')) {
         * appearance 
         *
         * @param menu item id
-        * @return print FontAwesome icons and a icon picker in menu part
+        * @return print FontAwesome icons and an icon picker in menu part
         */
 
         public function add_icon_before_menu_input($item_id)
