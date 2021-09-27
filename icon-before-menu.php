@@ -12,7 +12,7 @@
  * Domain Path:       /languages
  */
 
- //IBM Means Icon Before Menu
+//IBM Means Icon Before Menu
 
 if (!class_exists('IconBeforeMenu')) {
     class IconBeforeMenu
@@ -28,10 +28,30 @@ if (!class_exists('IconBeforeMenu')) {
             add_action('admin_enqueue_scripts', array($this, 'style_main_icon'));
         }
 
-        // Add inputs in appreance>nav-menu
+        /*
+        * return a list of FontAwesome icons.
+        *
+        * This function return font awesome icons name that
+        * it uses in add_icon_before_menu_input function.
+        *
+        * @param nothing
+        * @return a list of fontAwesome icons name in unorderd list
+        */
+
+        /*
+        *
+        * add icon selector into appearence->menu
+        *
+        * This function return an input and FontAwesoem icons selector in menu section in
+        * appearance 
+        *
+        * @param menu item id
+        * @return print FontAwesome icons and a icon picker in menu part
+        */
+
         public function add_icon_before_menu_input($item_id)
         {
-            $menu_item_name = 'select_IBM_' . $item_id; // باید اصلاح شود
+            $menu_item_name = 'select_IBM_' . $item_id;
             $menu_item_ID = 'select_IBM_' . $item_id;
             $valuPostMeta = get_post_meta($item_id, "select_IBM_" . $item_id, true);
 ?>
@@ -42,6 +62,7 @@ if (!class_exists('IconBeforeMenu')) {
                 <input type="input" id="<?php echo $menu_item_ID ?>" value="<?php if ($valuPostMeta) {
                                                                                 echo $valuPostMeta;
                                                                             } ?>" name="<?php echo $menu_item_name ?>">
+
                 <ul class="menuIconUlist">
                     <?php
                     $array = [ // اصلاح شود با یک منو آکاردئون + آیکون حذف
@@ -222,26 +243,36 @@ if (!class_exists('IconBeforeMenu')) {
 <?php
         }
 
-        // Save values with "wp_update_nav_menu_item" hook
+        /*
+        * Save value if selected any icon
+        *
+        * This function check and save value in database
+        * with post-metas functions
+        *
+        * @param mixed, menu id and menu item database id
+        * @return void
+        *
+        */
         public function save_icon_before_menu_value($menu_id, $menu_item_db_id)
         {
-            $menuItem = $_POST["select_IBM_{$menu_item_db_id}"];
-            if (isset($menuItem)) {
-                update_post_meta($menu_item_db_id, 'select_IBM_' . $menu_item_db_id, $menuItem);
+            if (isset($_POST["select_IBM_{$menu_item_db_id}"])) {
+                update_post_meta($menu_item_db_id, 'select_IBM_' . $menu_item_db_id, $_POST["select_IBM_{$menu_item_db_id}"]);
             }
         }
 
-        // Edit and show icon on page before menu items
-        public function add_icon_before_menu_title($title, $item) 
         /*
-            تغییر نام تابع
-            تغییر نام کلاس طوری که شبیه به نام افزونه باشد
-
+        * Add fontAwesome icon before menu item
+        *
+        * This function edit and add choosen icon just before menu item
+        * in all level
+        *
+        * @param mixed title of menu icon and menu item object
+        * @return void
+        *
+        *
         */
+        public function add_icon_before_menu_title($title, $item)
         {
-
-           // all level
-            // global $menu_item_name; 
             $menuValu = get_post_meta($item->ID, "select_IBM_" . $item->ID, true);
             if ($menuValu) {
                 return '<span class="CustomMenuIcon dashicons dashicons-' . $menuValu . ' "></span> <span>' . $title . '</span>';
