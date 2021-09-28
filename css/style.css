@@ -3,7 +3,7 @@
     vertical-align: middle;
 }
 
-ul.menuIconUlist {
+ul.menuIconslist {
     color: gray;
     display: flex;
     flex-wrap: wrap;
@@ -15,7 +15,24 @@ ul.menuIconUlist {
     align-items: baseline;
 }
 
-ul.menuIconUlist li {
+ul.menuIconslist li {
     list-style-type: none;
     padding: 2px 3px;
+}
+.sectionCustomField{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: center;
+    width: 100%;
+    border: 1px solid #929292;
+    padding: 0.5rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.selectedIcon{
+    border: 2px solid #27a79b;
 }
