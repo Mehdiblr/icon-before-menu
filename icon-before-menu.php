@@ -58,12 +58,29 @@ if (!class_exists('IconBeforeMenu')) {
 
 
             <div class="sectionCustomField">
-                <label for="<?php echo $menu_item_ID ?>">انتخاب آیکون</label>
-                <input type="input" id="<?php echo $menu_item_ID ?>" value="<?php if ($valuPostMeta) {
+                <label for="<?php echo $menu_item_ID ?>" >انتخاب آیکون</label>
+                <div>
+                    <span>
+                    آیکون کنونی:
+                    </span>
+                    <?php 
+                 if ($valuPostMeta) {
+                     if($valuPostMeta == "noIcon"){
+                         echo "بدون آیکون";
+                     }else{
+                        echo "<span id =\"currentIcon".$item_id."\" class=\"dashicons dashicons-" . $valuPostMeta . "\"></span> ";
+                     }
+                }else{
+                    echo "فعلا آیکونی انتخاب نکردید";
+                }
+                ?>
+                </div>
+
+                <input type="hidden" id="<?php echo $menu_item_ID ?>" value="<?php if ($valuPostMeta) {
                                                                                 echo $valuPostMeta;
                                                                             } ?>" name="<?php echo $menu_item_name ?>">
 
-                <ul class="menuIconUlist">
+                <ul class="menuIconslist">
                     <?php
                     $array = [ // اصلاح شود با یک منو آکاردئون + آیکون حذف
                         "menu",
@@ -229,12 +246,20 @@ if (!class_exists('IconBeforeMenu')) {
                         "upload",
                         "backup",
                         "lightbulb",
-                        "smiley"
+                        "smiley",
+                        "noIcon"
                     ];
-
                     foreach ($array as $key) {
+                        if($key != "noIcon"){
+                            if(($valuPostMeta == $key)){
+                                echo '<li class="iconPicker selectedIcon" menuID="' . $item_id . '" name="' . $key . '"> <span class="dashicons dashicons-' . $key . '"></span> </li>';
+                            }else{
+                                echo '<li class="iconPicker  " menuID="' . $item_id . '" name="' . $key . '"> <span class="dashicons dashicons-' . $key . '"></span> </li>';
+                            }
+                        }else{
+                            echo "<li class=\"iconPicker\" menuID=\"" . $item_id . "\" name=" . $key . "> بدون آیکون </li>";
+                        }
 
-                        echo "<li class=\"iconPicker\" menuID=\"" . $item_id . "\" name=" . $key . "> <span class=\"dashicons dashicons-" . $key . "\"></span> </li>";
                     }
                     ?>
                 </ul>
@@ -273,9 +298,8 @@ if (!class_exists('IconBeforeMenu')) {
         */
         public function add_icon_before_menu_title($title, $item)
         {
-            $menuValu = get_post_meta($item->ID, "select_IBM_" . $item->ID, true);
-            if ($menuValu) {
-                return '<span class="CustomMenuIcon dashicons dashicons-' . $menuValu . ' "></span> <span>' . $title . '</span>';
+            if (get_post_meta($item->ID, "select_IBM_" . $item->ID, true)) {
+                return '<span class="CustomMenuIcon dashicons dashicons-' . get_post_meta($item->ID, "select_IBM_" . $item->ID, true) . ' "></span> <span>' . $title . '</span>';
             } else {
                 return $title;
             }
